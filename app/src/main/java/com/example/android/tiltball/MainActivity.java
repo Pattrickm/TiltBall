@@ -103,7 +103,7 @@ public class MainActivity extends Activity implements SensorEventListener{
     private class ShapeView extends SurfaceView implements SurfaceHolder.Callback{
 
         private final int RADIUS = 50;
-        private final float FACTOR_BOUNCEBACK = 0.75f;
+        private final float FACTOR_BOUNCEBACK = 0.5f;
 
         private int mXCenter;
         private int mYCenter;
@@ -153,11 +153,16 @@ public class MainActivity extends Activity implements SensorEventListener{
                 mVx = -mVx * FACTOR_BOUNCEBACK;
             }
 
-            if(mYCenter < RADIUS)  {  mYCenter = RADIUS;  mVy = -mVy * FACTOR_BOUNCEBACK;  }  if(mXCenter > mWidthScreen - RADIUS)
-        {
-            mXCenter = mWidthScreen - RADIUS;
-            mVx = -mVx * FACTOR_BOUNCEBACK;
-        }
+            if(mYCenter < RADIUS)
+            {
+                mYCenter = RADIUS;  mVy = -mVy * FACTOR_BOUNCEBACK;
+            }
+
+            if(mXCenter > mWidthScreen - RADIUS)
+            {
+                mXCenter = mWidthScreen - RADIUS;
+                mVx = -mVx * FACTOR_BOUNCEBACK;
+            }
 
             if(mYCenter > mHeightScreen - 2 * RADIUS)
             {
