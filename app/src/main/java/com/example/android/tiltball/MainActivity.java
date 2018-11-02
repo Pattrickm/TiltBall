@@ -105,28 +105,31 @@ public class MainActivity extends Activity implements SensorEventListener{
         private final int RADIUS = 50;
         private final float FACTOR_BOUNCEBACK = 0.75f;
 
-        private int mXCenter;
-        private int mYCenter;
+        private int mXCenter; //center x cord
+        private int mYCenter; //center y cord
         private RectF mRectF;
         private final Paint mPaint;
         private ShapeThread mThread;
 
-        private float mVx;
-        private float mVy;
+        private float mVx; //velocity in x
+        private float mVy; //velocity in y
 
         public ShapeView(Context context) {
             super(context);
 
+            //get container that holds the ball
             getHolder().addCallback(this);
             mThread = new ShapeThread(getHolder(), this);
             setFocusable(true);
 
+            //color the ball
             mPaint = new Paint();
             mPaint.setColor(0xFFFFFFFF);
             mPaint.setAlpha(192);
             mPaint.setStyle(Paint.Style.FILL);
             mPaint.setAntiAlias(true);
 
+            //set up the background
             mRectF = new RectF();
         }
 
@@ -141,9 +144,11 @@ public class MainActivity extends Activity implements SensorEventListener{
         // calculate and update the ball's position
         public boolean updateOvalCenter()
         {
+            //calculate updated velocity
             mVx -= mAx * mDeltaT;
             mVy += mAy * mDeltaT;
 
+            //calculate updateed position
             mXCenter += (int)(mDeltaT * (mVx + 0.5 * mAx * mDeltaT));
             mYCenter += (int)(mDeltaT * (mVy + 0.5 * mAy * mDeltaT));
 
@@ -171,6 +176,7 @@ public class MainActivity extends Activity implements SensorEventListener{
         // update the canvas
         protected void onDraw(Canvas canvas)
         {
+            //draw and update actual ball view on the screen
             if(mRectF != null)
             {
                 mRectF.set(mXCenter - RADIUS, mYCenter - RADIUS, mXCenter + RADIUS, mYCenter + RADIUS);
