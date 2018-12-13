@@ -3,6 +3,7 @@ package com.example.android.tiltball;
 import java.util.Timer;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -180,7 +181,7 @@ public class MainActivity extends Activity implements SensorEventListener{
             if(mRectF != null)
             {
                 mRectF.set(mXCenter - RADIUS, mYCenter - RADIUS, mXCenter + RADIUS, mYCenter + RADIUS);
-                canvas.drawColor(0XFF000000);
+                canvas.drawColor(0XFF000000); //Crash here on press of back button.
                 canvas.drawOval(mRectF, mPaint);
             }
         }
@@ -249,4 +250,6 @@ public class MainActivity extends Activity implements SensorEventListener{
             }
         }
     }
+
+
 }
