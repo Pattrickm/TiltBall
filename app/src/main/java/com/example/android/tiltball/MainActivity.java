@@ -185,8 +185,10 @@ public class MainActivity extends Activity implements SensorEventListener{
             //draw and update actual ball view on the screen
             if(mRectF != null)
             {
+                //Crash here on press of back button,
+                //possibly add a check to make sure it only does this if the MainActivity is active?
                 mRectF.set(mXCenter - RADIUS, mYCenter - RADIUS, mXCenter + RADIUS, mYCenter + RADIUS);
-                canvas.drawColor(0XFF000000); //Crash here on press of back button.
+                canvas.drawColor(0XFF000000);
                 canvas.drawOval(mRectF, mPaint);
             }
         }
@@ -245,7 +247,7 @@ public class MainActivity extends Activity implements SensorEventListener{
                 try {
                     c = mSurfaceHolder.lockCanvas(null);
                     synchronized (mSurfaceHolder) {
-                        mShapeView.onDraw(c);
+                        mShapeView.onDraw(c); //Weird error here?
                     }
                 } finally {
                     if (c != null) {
