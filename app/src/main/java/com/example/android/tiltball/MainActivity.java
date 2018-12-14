@@ -224,11 +224,14 @@ public class MainActivity extends Activity implements SensorEventListener{
                 canvas.drawOval(mRectF, mPaint);
                 canvas.drawRect(mRectF, mPaint); //TODO: Remove this square
 
-//                canvas.drawColor(Color.red(0));
-//                Paint paint = new Paint();
-//                paint.setColor(0xFFFF3432);
-//                paint.setStyle(Paint.Style.STROKE);
-//                paint.setStrokeWidth(4);
+
+                //canvas.drawColor(Color.red(0));
+                Paint paint = new Paint();
+                paint.setColor(0xFFFF3432);
+                paint.setStyle(Paint.Style.FILL);
+                paint.setTextSize(36f);
+
+                canvas.drawText("Hello", 50, 50, paint);
 //
 //                RectF drawRect = new RectF();
 //                drawRect.set(0, 0, mWidthScreen / 5, mHeightScreen / 5);
