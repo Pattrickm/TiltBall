@@ -3,11 +3,9 @@ package com.example.android.tiltball;
 import java.util.Timer;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.hardware.Sensor;
@@ -46,39 +44,10 @@ public class MainActivity extends Activity implements SensorEventListener{
     private Handler mHandler;
     private boolean isTimerStarted = false;
     private long mStart;
-    public Maze maze;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        // 0 == floor, 1 == wall, 2 == different looking wall
-        int[][] mazeArray = {
-                {0, 0, 0, 0, 0, 0, 1, 0, 1, 0},
-                {0, 1, 0, 1, 0, 0, 1, 0, 1, 0},
-                {0, 0, 0, 1, 0, 0, 1, 0, 1, 0},
-                {1, 1, 0, 1, 0, 0, 1, 0, 1, 0},
-                {0, 2, 0, 0, 0, 0, 1, 0, 1, 0},
-                {0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-                {0, 1, 0, 1, 0, 0, 1, 0, 0, 0},
-                {0, 0, 0, 1, 0, 0, 1, 0, 0, 0},
-                {1, 1, 0, 1, 0, 0, 1, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 1, 0, 0, 2}
-        };
-
-        Bitmap[] bitmaps = {
-                BitmapFactory.decodeResource(getResources(), R.drawable.floor),
-                BitmapFactory.decodeResource(getResources(), R.drawable.wall),
-                BitmapFactory.decodeResource(getResources(), R.drawable.hole)
-                //BitmapFactory.decodeResource(getResources(), R.drawable.secondwall)
-        };
-
-
-
-
-
-
 
         // set the screen always portait
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -92,17 +61,11 @@ public class MainActivity extends Activity implements SensorEventListener{
         mWidthScreen = display.getWidth();
         mHeightScreen = display.getHeight();
 
-        // Chance the 480 and 320 to match the screen size of your device
-        maze = new Maze(bitmaps, mazeArray, 10, 10, mWidthScreen, mHeightScreen);
-
         // initializing the view that renders the ball
         mShapeView = new ShapeView(this);
         mShapeView.setOvalCenter((int)(mWidthScreen * 0.6), (int)(mHeightScreen * 0.6));
 
-
         setContentView(mShapeView);
-
-
     }
 
     @Override
@@ -143,28 +106,31 @@ public class MainActivity extends Activity implements SensorEventListener{
         private final int RADIUS = 50;
         private final float FACTOR_BOUNCEBACK = 0.5f;
 
-        private int mXCenter;
-        private int mYCenter;
+        private int mXCenter; //center x cord
+        private int mYCenter; //center y cord
         private RectF mRectF;
         private final Paint mPaint;
         private ShapeThread mThread;
 
-        private float mVx;
-        private float mVy;
+        private float mVx; //velocity in x
+        private float mVy; //velocity in y
 
         public ShapeView(Context context) {
             super(context);
 
+            //get container that holds the ball
             getHolder().addCallback(this);
             mThread = new ShapeThread(getHolder(), this);
             setFocusable(true);
 
+            //color the ball
             mPaint = new Paint();
-            mPaint.setColor(0xFF0000FF);
+            mPaint.setColor(0xFFFFFFFF);
             mPaint.setAlpha(192);
             mPaint.setStyle(Paint.Style.FILL);
             mPaint.setAntiAlias(true);
 
+            //set up the background
             mRectF = new RectF();
         }
 
@@ -179,9 +145,11 @@ public class MainActivity extends Activity implements SensorEventListener{
         // calculate and update the ball's position
         public boolean updateOvalCenter()
         {
+            //calculate updated velocity
             mVx -= mAx * mDeltaT;
             mVy += mAy * mDeltaT;
 
+            //calculate updateed position
             mXCenter += (int)(mDeltaT * (mVx + 0.5 * mAx * mDeltaT));
             mYCenter += (int)(mDeltaT * (mVy + 0.5 * mAy * mDeltaT));
 
@@ -214,33 +182,15 @@ public class MainActivity extends Activity implements SensorEventListener{
         // update the canvas
         protected void onDraw(Canvas canvas)
         {
-
+            //draw and update actual ball view on the screen
             if(mRectF != null)
             {
-                maze.drawMaze(canvas, 0, 0);
-
+                //Crash here on press of back button,
+                //possibly add a check to make sure it only does this if the MainActivity is active?
                 mRectF.set(mXCenter - RADIUS, mYCenter - RADIUS, mXCenter + RADIUS, mYCenter + RADIUS);
-                //canvas.drawColor(0XFF000000);
+                canvas.drawColor(0XFF000000);
                 canvas.drawOval(mRectF, mPaint);
-                canvas.drawRect(mRectF, mPaint); //TODO: Remove this square
-
-//                canvas.drawColor(Color.red(0));
-//                Paint paint = new Paint();
-//                paint.setColor(0xFFFF3432);
-//                paint.setStyle(Paint.Style.STROKE);
-//                paint.setStrokeWidth(4);
-//
-//                RectF drawRect = new RectF();
-//                drawRect.set(0, 0, mWidthScreen / 5, mHeightScreen / 5);
-//                //canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.wall), 0,0, paint);
-//                //canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.wall), 20,0, paint);
-//                canvas.drawLine(0,0, 500, 500, paint);
-//                canvas.drawCircle(50,50, 40, paint);
             }
-
-
-
-
         }
 
         @Override
@@ -291,14 +241,13 @@ public class MainActivity extends Activity implements SensorEventListener{
         @Override
         public void run() {
             Canvas c;
-
             while (mRun) {
                 mShapeView.updateOvalCenter();
                 c = null;
                 try {
                     c = mSurfaceHolder.lockCanvas(null);
                     synchronized (mSurfaceHolder) {
-                        mShapeView.onDraw(c);
+                        mShapeView.onDraw(c); //Weird error here?
                     }
                 } finally {
                     if (c != null) {
@@ -308,4 +257,6 @@ public class MainActivity extends Activity implements SensorEventListener{
             }
         }
     }
+
+
 }
