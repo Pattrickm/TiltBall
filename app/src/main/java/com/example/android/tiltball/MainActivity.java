@@ -220,7 +220,7 @@ public class MainActivity extends Activity implements SensorEventListener{
                 maze.drawMaze(canvas, 0, 0);
 
                 mRectF.set(mXCenter - RADIUS, mYCenter - RADIUS, mXCenter + RADIUS, mYCenter + RADIUS);
-                canvas.drawColor(0XFF000000);
+                //canvas.drawColor(0XFF000000);
                 canvas.drawOval(mRectF, mPaint);
                 canvas.drawRect(mRectF, mPaint); //TODO: Remove this square
 
