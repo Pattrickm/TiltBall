@@ -17,4 +17,8 @@ public class MainMenu_Activity extends AppCompatActivity {
     public void onStart(View v){
         startActivity(new Intent(MainMenu_Activity.this, MainActivity.class));
     }
+
+    public void onHighScore(View v){
+        startActivity(new Intent(MainMenu_Activity.this, HighScore.class));
+    }
 }

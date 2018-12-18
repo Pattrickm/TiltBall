@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,6 +12,14 @@
         android:layout_height="339dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="126dp"
+        android:layout_marginLeft="126dp"
+        android:layout_marginRight="126dp"
+        android:layout_marginStart="126dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/labrinth" />
 
     <TextView
@@ -19,9 +28,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"
+        android:layout_marginEnd="153dp"
+        android:layout_marginLeft="152dp"
+        android:layout_marginRight="153dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="10dp"
         android:text="@string/main_menu_title"
-        android:textSize="120sp" />
+        android:textSize="120sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/start_button"
@@ -29,18 +45,35 @@
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="245dp"
+        android:layout_marginBottom="52dp"
+        android:layout_marginEnd="250dp"
+        android:layout_marginLeft="250dp"
+        android:layout_marginRight="250dp"
+        android:layout_marginStart="250dp"
+        android:layout_marginTop="52dp"
+        android:onClick="onStart"
         android:text="@string/main_menu_start"
         android:textSize="36sp"
-        android:onClick="onStart"/>/>
+        app:layout_constraintBottom_toTopOf="@+id/high_scoreButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_menu_title" />/>
 
     <Button
-        android:id="@+id/start_button2"
+        android:id="@+id/high_scoreButton"
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="373dp"
+        android:layout_marginEnd="250dp"
+        android:layout_marginLeft="250dp"
+        android:layout_marginRight="250dp"
+        android:layout_marginStart="250dp"
+        android:layout_marginTop="52dp"
         android:text="@string/main_menu_high_scores"
-        android:textSize="36sp" />
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_button"
+        android:onClick="onHighScore"/>
 </android.support.constraint.ConstraintLayout>
