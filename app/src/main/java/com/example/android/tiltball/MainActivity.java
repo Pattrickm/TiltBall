@@ -16,6 +16,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -55,28 +56,28 @@ public class MainActivity extends Activity implements SensorEventListener{
 
         // 0 == floor, 1 == wall, 2 == hole
         int[][] mazeArray = {
-                {0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-                {0, 1, 0, 1, 0, 0, 1, 0, 0, 1},
-                {0, 0, 0, 1, 0, 0, 1, 0, 0, 1},
-                {1, 1, 0, 1, 0, 0, 1, 0, 0, 1},
-                {0, 2, 0, 0, 0, 0, 1, 0, 0, 1},
-                {0, 0, 0, 0, 0, 0, 1, 1, 0, 1},
-                {0, 1, 0, 1, 0, 0, 1, 0, 0, 0},
-                {0, 0, 0, 1, 0, 0, 1, 0, 0, 0},
-                {1, 1, 0, 1, 0, 0, 1, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 1, 0, 0, 2},
-                {0, 0, 0, 1, 0, 0, 1, 0, 0, 0},
-                {1, 1, 0, 1, 0, 0, 1, 0, 0, 0},
-                {0, 0, 0, 1, 0, 0, 1, 0, 0, 0},
-                {1, 1, 0, 1, 0, 0, 1, 0, 0, 0},
-                {0, 0, 0, 1, 0, 0, 1, 0, 0, 0},
-                {1, 1, 0, 1, 0, 0, 1, 0, 0, 0}
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 2, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 2, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 0, 0, 1, 0, 0, 1, 0, 0, 1},
+                {1, 1, 1, 1, 0, 0, 1, 0, 0, 1},
+                {1, 1, 0, 0, 0, 0, 1, 0, 0, 1},
+                {1, 0, 0, 0, 0, 0, 1, 0, 0, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 1, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 2, 0, 0, 0, 0, 0, 0, 0, 1},
+                {1, 2, 2, 0, 0, 0, 0, 0, 0, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         };
 
         Bitmap[] bitmaps = {
-                BitmapFactory.decodeResource(getResources(), R.drawable.floor),
-                BitmapFactory.decodeResource(getResources(), R.drawable.wall),
-                BitmapFactory.decodeResource(getResources(), R.drawable.hole)
+                BitmapFactory.decodeResource(getResources(), R.drawable.floors),
+                BitmapFactory.decodeResource(getResources(), R.drawable.walls),
+                BitmapFactory.decodeResource(getResources(), R.drawable.holes)
                 //BitmapFactory.decodeResource(getResources(), R.drawable.secondwall)
         };
 
@@ -99,11 +100,11 @@ public class MainActivity extends Activity implements SensorEventListener{
         mHeightScreen = display.getHeight();
 
         // Chance the 480 and 320 to match the screen size of your device
-        maze = new Maze(bitmaps, mazeArray, 10, 10, mWidthScreen, mHeightScreen);
+        maze = new Maze(bitmaps, mazeArray, 10, 16, mWidthScreen, mHeightScreen);
 
         // initializing the view that renders the ball
         mShapeView = new ShapeView(this);
-        mShapeView.setOvalCenter((int)(mWidthScreen * 0.6), (int)(mHeightScreen * 0.6));
+        mShapeView.setOvalCenter((int)(mWidthScreen * 0.8), (int)(mHeightScreen * 0.8));
 
 
         setContentView(mShapeView);
@@ -125,8 +126,8 @@ public class MainActivity extends Activity implements SensorEventListener{
         float mAz = event.values[2];
 
         // taking into account the frictions
-        mAx = Math.signum(mAx) * Math.abs(mAx) * (1 - FACTOR_FRICTION * Math.abs(mAz) / GRAVITY);
-        mAy = Math.signum(mAy) * Math.abs(mAy) * (1 - FACTOR_FRICTION * Math.abs(mAz) / GRAVITY);
+        mAx = (Math.signum(mAx) * Math.abs(mAx) * (1 - FACTOR_FRICTION * Math.abs(mAz) / GRAVITY))/3.0f;// TODO: remove the last divisor(trying to slow movement)
+        mAy = (Math.signum(mAy) * Math.abs(mAy) * (1 - FACTOR_FRICTION * Math.abs(mAz) / GRAVITY))/3.0f;// TODO: same as above
     }
 
     @Override
@@ -214,6 +215,70 @@ public class MainActivity extends Activity implements SensorEventListener{
                 mVy = -mVy * FACTOR_BOUNCEBACK;
             }
 
+            int sq = maze.getType(mXCenter/100, mYCenter/100);
+            int hitOnBot = maze.getType(mXCenter/100, (int)(((mYCenter+100)/100)* 0.8));
+            int hitOnTop = maze.getType(mXCenter/100, (int)(((mYCenter-100)/100)* 0.8));
+            if(mVy < 0){
+                if(hitOnBot == 1){
+                    //mVx = -mVx * 0.7f;
+                    //mVy = -mVy * 0.7f;
+
+
+                    int top = maze.getTop(mHeightScreen, (int)(((mYCenter+100)/100)* 0.8));
+                    if(mYCenter > top)//"top of square at postion x, y")//mYCenter+100)//mHeightScreen - 2 * RADIUS)
+                    {
+                        Log.d("HIT", "WALLONBOT");
+                        mYCenter = top;
+                        mVy = -mVy * FACTOR_BOUNCEBACK;
+                    }
+                }
+            } else {
+                if(hitOnTop == 1){
+                    //mVx = -mVx * 0.7f;
+                    //mVy = -mVy * 0.7f;
+
+
+                    int bot = maze.getBottom(mHeightScreen, (int)(((mYCenter-100)/100)* 0.8));
+                    if(mYCenter < bot)//"top of square at postion x, y")//mYCenter+100)//mHeightScreen - 2 * RADIUS)
+                    {
+                        Log.d("HIT", "WALLONTOOPP");
+                        mYCenter = bot;
+                        mVy = -mVy * FACTOR_BOUNCEBACK;
+                    }
+                }
+            }
+
+            int hitOnRight = maze.getType((mXCenter+100)/100, (int)((mYCenter/100)* 0.8));
+            int hitOnLeft = maze.getType((mXCenter-100)/100, (int)((mYCenter/100)* 0.8));
+            if (mVx < 0) {
+                if(hitOnRight ==1){
+                    int left = maze.getLeft(mWidthScreen, (mXCenter+100)/100);
+                    if(mXCenter > left){
+                        Log.d("HIT", "RIGHT");
+                        mXCenter = left;
+                        mVx = -mVx * FACTOR_BOUNCEBACK;
+                    }
+                }
+            }else {
+                if(hitOnLeft ==1){
+                    int right = maze.getRight(mWidthScreen, (mXCenter-100)/100);
+                    if(mXCenter < right){
+                        Log.d("HIT", "LEFT");
+                        mXCenter = right;
+                        mVx = -mVx * FACTOR_BOUNCEBACK;
+                    }
+                }
+            }
+
+
+
+//            else if (sq == 2) {
+//                //mVx = 0;
+//                //mVy = 0;
+//                Log.d("HIT", "HOLE");
+//            }
+
+
             return true;
         }
 
@@ -227,6 +292,10 @@ public class MainActivity extends Activity implements SensorEventListener{
 
                 mRectF.set(mXCenter - RADIUS, mYCenter - RADIUS, mXCenter + RADIUS, mYCenter + RADIUS);
                 //canvas.drawColor(0XFF000000);
+
+
+                Log.d("Square", Integer.toString(mXCenter/100) + " _ " + Integer.toString((int)((mYCenter/100)*0.8))); //TODO: fix horrible math trying to limit x and y to 10 and 16
+
                 canvas.drawOval(mRectF, mPaint);
                 canvas.drawRect(mRectF, mPaint); //TODO: Remove this square
 
