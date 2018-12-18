@@ -218,7 +218,7 @@ public class MainActivity extends Activity implements SensorEventListener{
             int sq = maze.getType(mXCenter/100, mYCenter/100);
             int hitOnBot = maze.getType(mXCenter/100, (int)(((mYCenter+100)/100)* 0.8));
             int hitOnTop = maze.getType(mXCenter/100, (int)(((mYCenter-100)/100)* 0.8));
-            if(mVy < 0){
+            if(mVy > 0){
                 if(hitOnBot == 1){
                     //mVx = -mVx * 0.7f;
                     //mVy = -mVy * 0.7f;
@@ -250,7 +250,7 @@ public class MainActivity extends Activity implements SensorEventListener{
 
             int hitOnRight = maze.getType((mXCenter+100)/100, (int)((mYCenter/100)* 0.8));
             int hitOnLeft = maze.getType((mXCenter-100)/100, (int)((mYCenter/100)* 0.8));
-            if (mVx < 0) {
+            if (mVx > 0) {
                 if(hitOnRight ==1){
                     int left = maze.getLeft(mWidthScreen, (mXCenter+100)/100);
                     if(mXCenter > left){

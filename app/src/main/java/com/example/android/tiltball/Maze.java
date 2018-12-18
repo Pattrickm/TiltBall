@@ -40,8 +40,32 @@ public class Maze {
      * @return The cell type
      */
     public int getType(int x, int y){
-        if(y < tileType.length && x < tileType[y].length) return tileType[y][x];
-        return 0;
+        if(y < tileType.length && x < tileType[y].length){
+            if(tileType[y][x] == 0){
+                Log.d("square on ", "FLOOR");
+            }else if (tileType[y][x] == 1){
+                Log.d("square on ", "WALL");
+            }else if (tileType[y][x] == 2){
+                Log.d("square on ", "HOLE");
+            }else{
+                Log.d("square on ", "ERRRRROR");
+            }
+
+            return tileType[y][x];
+        }
+        return -1;
+    }
+    public int getTop(int mHeightScreen, int y){
+        return y * (mHeightScreen / 16);
+    }
+    public int getBottom(int mHeightScreen, int y){
+        return y * (mHeightScreen / 16) + (mHeightScreen / 16);
+    }
+    public int getRight(int mWidthScreen, int x){
+        return x * (mWidthScreen / 10) + (mWidthScreen / 16);
+    }
+    public int getLeft(int mWidthScreen, int x){
+        return x * (mWidthScreen / 10);
     }
 
     public float getCellWidth(){ return drawRect.width(); }
@@ -73,8 +97,8 @@ public class Maze {
                     // This tile is not null, so check if it has to be drawn
                     if(xCoord + drawRect.width() >= 0 && yCoord + drawRect.height() >= 0){
 
-                        Log.d("tileX_Y", Integer.toString(tileX) + " " + Integer.toString(tileX));
-                        Log.d("coordsX_Y", Float.toString(xCoord) + " " + Float.toString(yCoord));
+                        //Log.d("tileX_Y", Integer.toString(tileX) + " " + Integer.toString(tileX));
+                        //Log.d("coordsX_Y", Float.toString(xCoord) + " " + Float.toString(yCoord));
                         // The tile actually visible to the user, so draw it
                         drawRect.offsetTo(xCoord, yCoord); // Move the rectangle to the coordinates
 
@@ -89,16 +113,16 @@ public class Maze {
                 // Move to the next tile on the X axis
                 tileX++;
 
-                Log.d("XUp", Integer.toString(tileX));
-                if(tileX < tileType[tileY].length)
-                    Log.d("firstCheckT", "First check true");
-                else
-                    Log.d("firstCheckF", "First check FALSE");
-
-                if(xCoord <= screenWidth)
-                    Log.d("secondCheckT", "Second check true");
-                else
-                    Log.d("secondCheckF", "Second check FALSE");
+//               Log.d("XUp", Integer.toString(tileX));
+//                if(tileX < tileType[tileY].length)
+//                    Log.d("firstCheckT", "First check true");
+//                else
+//                    Log.d("firstCheckF", "First check FALSE");
+//
+//                if(xCoord <= screenWidth)
+//                    Log.d("secondCheckT", "Second check true");
+//                else
+//                    Log.d("secondCheckF", "Second check FALSE");
 
                 xCoord += drawRect.width();
             }
@@ -108,8 +132,8 @@ public class Maze {
 
             yCoord += drawRect.height();
 
-            Log.d("screenWidth",Float.toString(screenWidth));
-            Log.d("coordsX_Y", Float.toString(xCoord) + " " + Float.toString(yCoord));
+//            Log.d("screenWidth",Float.toString(screenWidth));
+//            Log.d("coordsX_Y", Float.toString(xCoord) + " " + Float.toString(yCoord));
         }
     }
 }
