@@ -1,6 +1,5 @@
 package com.example.android.tiltball;
 
-import java.util.Timer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -47,6 +46,15 @@ public class MainActivity extends Activity implements SensorEventListener{
     long startTime = 0;
     Paint paint = new Paint();
     String time = "";
+        //High Scores
+        TextView highscore0;
+        TextView highscore1;
+        TextView highscore2;
+        TextView highscore3;
+        TextView highscore4;
+        TextView[] scores = new TextView[5];
+
+
 
     //runs without a timer by reposting this handler at the end of the runnable
         Handler timerHandler = new Handler();
@@ -101,11 +109,6 @@ public class MainActivity extends Activity implements SensorEventListener{
         };
 
 
-
-
-
-
-
         // set the screen always portait
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -134,7 +137,17 @@ public class MainActivity extends Activity implements SensorEventListener{
         paint.setTextSize(50f);
         startTime = System.currentTimeMillis();
         timerHandler.postDelayed(timerRunnable, 0);
-
+            //High Scores
+            highscore0 = findViewById(R.id.time0);
+            highscore1 = findViewById(R.id.time1);
+            highscore2 = findViewById(R.id.time2);
+            highscore3 = findViewById(R.id.time3);
+            highscore4 = findViewById(R.id.time4);
+            scores[0] = highscore0;
+            scores[1] = highscore1;
+            scores[2] = highscore2;
+            scores[3] = highscore3;
+            scores[4] = highscore4;
     }
 
     @Override
@@ -236,6 +249,8 @@ public class MainActivity extends Activity implements SensorEventListener{
                 else if(hitOnTop == 3){
                     //Win
                     Log.d("WIN", "You Win");
+                    highscore0.setText(time);
+
                 }
             } else {
                 // Check for walls when moving up
@@ -257,6 +272,7 @@ public class MainActivity extends Activity implements SensorEventListener{
                 else if(hitOnBot == 3){
                     //Win
                     Log.d("WIN", "You Win");
+                    highscore0.setText(time);
                 }
             }
 
@@ -279,6 +295,7 @@ public class MainActivity extends Activity implements SensorEventListener{
                 else if(hitOnRight == 3){
                     //Win
                     Log.d("WIN", "You Win");
+                    highscore0.setText(time);
                 }
             }else {
                 // Check for walls when moving left
@@ -294,6 +311,7 @@ public class MainActivity extends Activity implements SensorEventListener{
                 else if(hitOnLeft == 3){
                     //Win
                     Log.d("WIN", "You Win");
+                    highscore0.setText(time);
                 }
             }
 
@@ -325,11 +343,6 @@ public class MainActivity extends Activity implements SensorEventListener{
 
                 canvas.drawOval(mRectF, mPaint);
                 canvas.drawRect(mRectF, mPaint); //TODO: Remove this square
-
-                //draw timer text
-                /*paint.setColor(0xFFFF3432);
-                paint.setStyle(Paint.Style.FILL);
-                paint.setTextSize(36f);*/
 
                 //draw Timer
                 canvas.drawText(time, 50, 50, paint);
