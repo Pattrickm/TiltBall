@@ -41,15 +41,15 @@ public class Maze {
      */
     public int getType(int x, int y){
         if(y < tileType.length && x < tileType[y].length){
-            if(tileType[y][x] == 0){
-                Log.d("square on ", "FLOOR");
-            }else if (tileType[y][x] == 1){
-                Log.d("square on ", "WALL");
-            }else if (tileType[y][x] == 2){
-                Log.d("square on ", "HOLE");
-            }else{
-                Log.d("square on ", "ERRRRROR");
-            }
+//            if(tileType[y][x] == 0){
+//                Log.d("square on ", "FLOOR");
+//            }else if (tileType[y][x] == 1){
+//                Log.d("square on ", "WALL");
+//            }else if (tileType[y][x] == 2){
+//                Log.d("square on ", "HOLE");
+//            }else{
+//                Log.d("square on ", "ERRRRROR");
+//            }
 
             return tileType[y][x];
         }
@@ -62,7 +62,7 @@ public class Maze {
         return y * (mHeightScreen / 16) + (mHeightScreen / 16);
     }
     public int getRight(int mWidthScreen, int x){
-        return x * (mWidthScreen / 10) + (mWidthScreen / 16);
+        return x * (mWidthScreen / 10) + (mWidthScreen / 10);
     }
     public int getLeft(int mWidthScreen, int x){
         return x * (mWidthScreen / 10);

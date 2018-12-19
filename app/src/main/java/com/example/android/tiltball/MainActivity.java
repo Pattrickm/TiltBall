@@ -57,20 +57,20 @@ public class MainActivity extends Activity implements SensorEventListener{
         // 0 == floor, 1 == wall, 2 == hole
         int[][] mazeArray = {
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 1, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 2, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 2, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 1, 0, 0, 1, 0, 0, 1},
-                {1, 1, 1, 1, 0, 0, 1, 0, 0, 1},
-                {1, 1, 0, 0, 0, 0, 1, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 1, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 2, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 2, 2, 0, 0, 0, 0, 0, 0, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 0, 0, 0, 0, 0, 0, 1, 1},
+                {1, 1, 0, 0, 0, 0, 0, 0, 1, 1},
+                {1, 1, 0, 0, 0, 0, 0, 0, 1, 1},
+                {1, 1, 2, 0, 0, 0, 0, 0, 1, 1},
+                {1, 1, 0, 1, 1, 0, 1, 0, 1, 1},
+                {1, 1, 1, 1, 0, 0, 1, 0, 1, 1},
+                {1, 1, 0, 0, 0, 0, 1, 0, 1, 1},
+                {1, 1, 0, 0, 0, 1, 1, 0, 1, 1},
+                {1, 1, 0, 0, 0, 1, 0, 0, 1, 1},
+                {1, 1, 0, 0, 0, 0, 0, 0, 1, 1},
+                {1, 1, 2, 0, 0, 0, 0, 0, 1, 1},
+                {1, 1, 2, 2, 0, 0, 0, 0, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         };
 
@@ -104,7 +104,7 @@ public class MainActivity extends Activity implements SensorEventListener{
 
         // initializing the view that renders the ball
         mShapeView = new ShapeView(this);
-        mShapeView.setOvalCenter((int)(mWidthScreen * 0.8), (int)(mHeightScreen * 0.8));
+        mShapeView.setOvalCenter((int)(mWidthScreen * 0.75), (int)(mHeightScreen * 0.75));
 
 
         setContentView(mShapeView);
@@ -192,78 +192,82 @@ public class MainActivity extends Activity implements SensorEventListener{
             mXCenter += (int)(mDeltaT * (mVx + 0.5 * mAx * mDeltaT));
             mYCenter += (int)(mDeltaT * (mVy + 0.5 * mAy * mDeltaT));
 
-            if(mXCenter < RADIUS)
-            {
-                mXCenter = RADIUS;
-                mVx = -mVx * FACTOR_BOUNCEBACK;
-            }
-
-            if(mYCenter < RADIUS)
-            {
-                mYCenter = RADIUS;  mVy = -mVy * FACTOR_BOUNCEBACK;
-            }
-
-            if(mXCenter > mWidthScreen - RADIUS)
-            {
-                mXCenter = mWidthScreen - RADIUS;
-                mVx = -mVx * FACTOR_BOUNCEBACK;
-            }
-
-            if(mYCenter > mHeightScreen - 2 * RADIUS)
-            {
-                mYCenter = mHeightScreen - 2 * RADIUS;
-                mVy = -mVy * FACTOR_BOUNCEBACK;
-            }
+//            if(mXCenter < RADIUS)
+//            {
+//                mXCenter = RADIUS;
+//                mVx = -mVx * FACTOR_BOUNCEBACK;
+//            }
+//
+//            if(mYCenter < RADIUS)
+//            {
+//                mYCenter = RADIUS;  mVy = -mVy * FACTOR_BOUNCEBACK;
+//            }
+//
+//            if(mXCenter > mWidthScreen - RADIUS)
+//            {
+//                mXCenter = mWidthScreen - RADIUS;
+//                mVx = -mVx * FACTOR_BOUNCEBACK;
+//            }
+//
+//            if(mYCenter > mHeightScreen - 2 * RADIUS)
+//            {
+//                mYCenter = mHeightScreen - 2 * RADIUS;
+//                mVy = -mVy * FACTOR_BOUNCEBACK;
+//            }
 
             int sq = maze.getType(mXCenter/100, mYCenter/100);
-            int hitOnBot = maze.getType(mXCenter/100, (int)(((mYCenter+100)/100)* 0.8));
-            int hitOnTop = maze.getType(mXCenter/100, (int)(((mYCenter-100)/100)* 0.8));
+            int hitOnBot = maze.getType(mXCenter/100, (int)(((mYCenter+131)/100)* 0.8));
+            int hitOnTop = maze.getType(mXCenter/100, (int)(((mYCenter-131)/100)* 0.8));
             if(mVy > 0){
+                if(hitOnTop == 1){
+                    //mVx = -mVx * 0.7f;
+                    //mVy = -mVy * 0.7f;
+
+                    Log.d("HEIGHT", Integer.toString(mHeightScreen));
+                    int top = maze.getTop(mHeightScreen, (int)(((mYCenter+131)/100)* 0.8));
+//                    if(mYCenter > top)//"top of square at postion x, y")//mYCenter+100)//mHeightScreen - 2 * RADIUS)
+//                    {
+//                        Log.d("HIT", "BOTTOM");
+//                        mYCenter = top;
+//                        mVy = -mVy * FACTOR_BOUNCEBACK;
+//                    }
+                }
+            } else {
                 if(hitOnBot == 1){
                     //mVx = -mVx * 0.7f;
                     //mVy = -mVy * 0.7f;
 
 
-                    int top = maze.getTop(mHeightScreen, (int)(((mYCenter+100)/100)* 0.8));
-                    if(mYCenter > top)//"top of square at postion x, y")//mYCenter+100)//mHeightScreen - 2 * RADIUS)
+                    int bot = maze.getTop(mHeightScreen, (int)(((mYCenter+131)/100)* 0.8));
+                    Log.d("HIT", Integer.toString(mYCenter) + " > " + Integer.toString(bot));
+                    if(mYCenter > bot)//"top of square at postion x, y")//mYCenter+100)//mHeightScreen - 2 * RADIUS)
                     {
-                        Log.d("HIT", "WALLONBOT");
-                        mYCenter = top;
-                        mVy = -mVy * FACTOR_BOUNCEBACK;
-                    }
-                }
-            } else {
-                if(hitOnTop == 1){
-                    //mVx = -mVx * 0.7f;
-                    //mVy = -mVy * 0.7f;
-
-
-                    int bot = maze.getBottom(mHeightScreen, (int)(((mYCenter-100)/100)* 0.8));
-                    if(mYCenter < bot)//"top of square at postion x, y")//mYCenter+100)//mHeightScreen - 2 * RADIUS)
-                    {
-                        Log.d("HIT", "WALLONTOOPP");
+                        Log.d("HIT", "TOP");
                         mYCenter = bot;
                         mVy = -mVy * FACTOR_BOUNCEBACK;
                     }
                 }
             }
 
-            int hitOnRight = maze.getType((mXCenter+100)/100, (int)((mYCenter/100)* 0.8));
-            int hitOnLeft = maze.getType((mXCenter-100)/100, (int)((mYCenter/100)* 0.8));
+            int hitOnRight = maze.getType((mXCenter+14)/100, (int)((mYCenter/100)* 0.8));
+            int hitOnLeft = maze.getType((mXCenter-108)/100, (int)((mYCenter/100)* 0.8));
             if (mVx > 0) {
                 if(hitOnRight ==1){
-                    int left = maze.getLeft(mWidthScreen, (mXCenter+100)/100);
+
+
+                    int left = maze.getLeft(mWidthScreen, (mXCenter+14)/100);
+                    //Log.d("HIT", Integer.toString(mXCenter) + " > " + Integer.toString(left));
                     if(mXCenter > left){
-                        Log.d("HIT", "RIGHT");
+                        //Log.d("HIT", "RIGHT");
                         mXCenter = left;
                         mVx = -mVx * FACTOR_BOUNCEBACK;
                     }
                 }
             }else {
                 if(hitOnLeft ==1){
-                    int right = maze.getRight(mWidthScreen, (mXCenter-100)/100);
+                    int right = maze.getRight(mWidthScreen, (mXCenter-108)/100);
                     if(mXCenter < right){
-                        Log.d("HIT", "LEFT");
+                        //Log.d("HIT", "LEFT");
                         mXCenter = right;
                         mVx = -mVx * FACTOR_BOUNCEBACK;
                     }
