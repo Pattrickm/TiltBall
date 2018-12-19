@@ -14,15 +14,6 @@ public class Maze {
 
     private float screenWidth, screenHeight;
 
-    /**
-     * Initialize a new maze.
-     * @param wallBitmap The desired bitmaps for the floors and walls
-     * @param isWall The wall data array. Each true value in the array represents a wall and each false represents a gap
-     * @param xCellCountOnScreen How many cells are visible on the screen on the x axis
-     * @param yCellCountOnScreen How many cells are visible on the screen on the y axis
-     * @param screenWidth The screen width
-     * @param screenHeight The screen height
-     */
     public Maze(Bitmap[] bitmaps, int[][] tileType, float xCellCountOnScreen, float yCellCountOnScreen, float screenWidth, float screenHeight){
         this.bitmaps = bitmaps;
         this.tileType = tileType;
@@ -33,12 +24,6 @@ public class Maze {
         drawRect.set(0, 0, screenWidth / xCellCountOnScreen, screenHeight / yCellCountOnScreen);
     }
 
-    /**
-     * Get the type of the cell. x and y values are not coordinates!
-     * @param x The x index of the cell
-     * @param y The y index of the cell
-     * @return The cell type
-     */
     public int getType(int x, int y){
         if(y < tileType.length && x < tileType[y].length){
 //            if(tileType[y][x] == 0){
@@ -55,6 +40,7 @@ public class Maze {
         }
         return -1;
     }
+    //TODO: remove passing screen sizes for all four below, already have them in private variables
     public int getTop(int mHeightScreen, int y){
         return y * (mHeightScreen / 16);
     }
@@ -70,13 +56,7 @@ public class Maze {
 
     public float getCellWidth(){ return drawRect.width(); }
     public float getCellHeight(){ return drawRect.height(); }
-
-    /**
-     * Draws the maze. View coordinates should have positive values.
-     * @param canvas Canvas for the drawing
-     * @param viewX The x coordinate of the view
-     * @param viewY The y coordinate of the view
-     */
+    
     public void drawMaze(Canvas canvas, float viewX, float viewY){
         int tileX = 0;
         int tileY = 0;
