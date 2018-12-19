@@ -251,19 +251,19 @@ public class MainActivity extends Activity implements SensorEventListener{
                 else if(hitOnTop == 3){
                     //Win
                     Log.d("WIN", "You Win");
-                    highscore0.setText(time);
+                    //highscore0.setText(time);
 
                     //Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_LONG).show();
                     //mRectF = null;
                     mXCenter = 10000;
                     mYCenter = 10000;
                     mThread.setRunning(false);
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_SHORT);
-                        }
-                    });
+//                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_SHORT);
+//                        }
+//                    });
 
                 }
             } else {
@@ -286,18 +286,18 @@ public class MainActivity extends Activity implements SensorEventListener{
                 else if(hitOnBot == 3){
                     //Win
                     Log.d("WIN", "You Win");
-                    highscore0.setText(time);
+                    //highscore0.setText(time);
                     //Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_LONG).show();
                     //mRectF = null;
                     mXCenter = 10000;
                     mYCenter = 10000;
                     mThread.setRunning(false);
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_SHORT);
-                        }
-                    });
+//                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_SHORT);
+//                        }
+//                    });
 
                 }
             }
@@ -321,18 +321,18 @@ public class MainActivity extends Activity implements SensorEventListener{
                 else if(hitOnRight == 3){
                     //Win
                     Log.d("WIN", "You Win");
-                    highscore0.setText(time);
+                    //highscore0.setText(time);
                     //Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_LONG).show();
                     //mRectF = null;
                     mXCenter = 10000;
                     mYCenter = 10000;
                     mThread.setRunning(false);
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_SHORT);
-                        }
-                    });
+//                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_SHORT);
+//                        }
+//                    });
                 }
             }else {
                 // Check for walls when moving left
@@ -348,9 +348,8 @@ public class MainActivity extends Activity implements SensorEventListener{
                 else if(hitOnLeft == 3){
                     //Win
                     Log.d("WIN", "You Win");
-                    highscore0.setText(time);
-                }
-            }
+                    //highscore0.setText(time);
+
 
 
                     //Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_LONG).show();
@@ -358,15 +357,16 @@ public class MainActivity extends Activity implements SensorEventListener{
                     mXCenter = 10000;
                     mYCenter = 10000;
                     mThread.setRunning(false);
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_SHORT);
-                        }
-                    });
+//                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_SHORT);
+//                        }
+//                    });
 
 
-
+                }
+            }
 
             return true;
         }
@@ -386,7 +386,6 @@ public class MainActivity extends Activity implements SensorEventListener{
                 Log.d("Square", Integer.toString(mXCenter/100) + " _ " + Integer.toString((int)((mYCenter/100)*0.8))); //TODO: fix horrible math trying to limit x and y to 10 and 16
 
                 canvas.drawOval(mRectF, mPaint);
-                canvas.drawRect(mRectF, mPaint); //TODO: Remove this square
 
                 //draw Timer
                 canvas.drawText(time, 50, 50, paint);
