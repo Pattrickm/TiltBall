@@ -16,12 +16,14 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements SensorEventListener{
 
@@ -82,7 +84,7 @@ public class MainActivity extends Activity implements SensorEventListener{
                 {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                 {1, 0, 0, 0, 0, 0, 1, 1, 0, 1},
                 {1, 0, 2, 1, 1, 1, 1, 1, 1, 1},
-                {1, 0, 0, 1, 0, 0, 0, 0, 0, 1},
+                {1, 0, 0, 1, 0, 0, 0, 3, 3, 1},
                 {1, 0, 0, 1, 0, 0, 0, 0, 0, 1},
                 {1, 0, 0, 1, 0, 0, 0, 0, 0, 1},
                 {1, 0, 0, 0, 0, 0, 1, 0, 0, 1},
@@ -236,6 +238,16 @@ public class MainActivity extends Activity implements SensorEventListener{
                 else if(hitOnTop == 3){
                     //Win
                     Log.d("WIN", "You Win");
+                    //Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_LONG).show();
+                    mRectF = null;
+                    mThread.setRunning(false);
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_SHORT);
+                        }
+                    });
+
                 }
             } else {
                 // Check for walls when moving up
@@ -257,6 +269,16 @@ public class MainActivity extends Activity implements SensorEventListener{
                 else if(hitOnBot == 3){
                     //Win
                     Log.d("WIN", "You Win");
+                    //Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_LONG).show();
+                    mRectF = null;
+                    mThread.setRunning(false);
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_SHORT);
+                        }
+                    });
+
                 }
             }
 
@@ -279,6 +301,15 @@ public class MainActivity extends Activity implements SensorEventListener{
                 else if(hitOnRight == 3){
                     //Win
                     Log.d("WIN", "You Win");
+                    //Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_LONG).show();
+                    mRectF = null;
+                    mThread.setRunning(false);
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_SHORT);
+                        }
+                    });
                 }
             }else {
                 // Check for walls when moving left
@@ -294,17 +325,18 @@ public class MainActivity extends Activity implements SensorEventListener{
                 else if(hitOnLeft == 3){
                     //Win
                     Log.d("WIN", "You Win");
+                    //Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_LONG).show();
+                    mRectF = null;
+                    mThread.setRunning(false);
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_SHORT);
+                        }
+                    });
+
                 }
             }
-
-
-
-//            else if (sq == 2) {
-//                //mVx = 0;
-//                //mVy = 0;
-//                Log.d("HIT", "HOLE");
-//            }
-
 
             return true;
         }
@@ -410,6 +442,7 @@ public class MainActivity extends Activity implements SensorEventListener{
                     }
                 }
             }
+
         }
     }
 }
