@@ -21,6 +21,7 @@ import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 public class MainActivity extends Activity implements SensorEventListener{
 
@@ -42,11 +43,28 @@ public class MainActivity extends Activity implements SensorEventListener{
     private float mAy; // acceleration along y axis
     private final float mDeltaT = 0.5f; // imaginary time interval between each acceleration updates
 
-    // timer
-    private Timer mTimer;
-    private Handler mHandler;
-    private boolean isTimerStarted = false;
-    private long mStart;
+    // timer stuff
+    long startTime = 0;
+    Paint paint = new Paint();
+    String time = "";
+
+    //runs without a timer by reposting this handler at the end of the runnable
+        Handler timerHandler = new Handler();
+        Runnable timerRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                long millis = System.currentTimeMillis() - startTime;
+                int seconds = (int) (millis / 1000);
+                int minutes = seconds / 60;
+                seconds = seconds % 60;
+
+                time = String.format("%d:%02d", minutes, seconds);
+                timerHandler.postDelayed(this, 500);
+            }
+        };
+
+    // maze
     public Maze maze;
 
     @Override
@@ -109,6 +127,12 @@ public class MainActivity extends Activity implements SensorEventListener{
 
         setContentView(mShapeView);
 
+        //Timer Stuff
+        paint.setColor(Color.WHITE);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setTextSize(50f);
+        startTime = System.currentTimeMillis();
+        timerHandler.postDelayed(timerRunnable, 0);
 
     }
 
@@ -305,14 +329,13 @@ public class MainActivity extends Activity implements SensorEventListener{
                 canvas.drawOval(mRectF, mPaint);
                 canvas.drawRect(mRectF, mPaint); //TODO: Remove this square
 
-
-                //canvas.drawColor(Color.red(0));
-                Paint paint = new Paint();
-                paint.setColor(0xFFFF3432);
+                //draw timer text
+                /*paint.setColor(0xFFFF3432);
                 paint.setStyle(Paint.Style.FILL);
-                paint.setTextSize(36f);
+                paint.setTextSize(36f);*/
 
-                canvas.drawText("Hello", 50, 50, paint);
+                //draw Timer
+                canvas.drawText(time, 50, 50, paint);
 //
 //                RectF drawRect = new RectF();
 //                drawRect.set(0, 0, mWidthScreen / 5, mHeightScreen / 5);
