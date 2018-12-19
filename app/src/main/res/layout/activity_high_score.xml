@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="105dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/start_button2">
+        app:layout_constraintBottom_toTopOf="@+id/back_button">
 
         <LinearLayout
             android:layout_width="wrap_content"
