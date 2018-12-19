@@ -84,7 +84,7 @@ public class MainActivity extends Activity implements SensorEventListener{
                 {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                 {1, 0, 0, 0, 0, 0, 1, 1, 0, 1},
                 {1, 0, 2, 1, 1, 1, 1, 1, 1, 1},
-                {1, 0, 0, 1, 0, 0, 0, 3, 3, 1},
+                {1, 0, 0, 1, 0, 0, 0, 0, 0, 1},
                 {1, 0, 0, 1, 0, 0, 0, 0, 0, 1},
                 {1, 0, 0, 1, 0, 0, 0, 0, 0, 1},
                 {1, 0, 0, 0, 0, 0, 1, 0, 0, 1},
@@ -239,7 +239,9 @@ public class MainActivity extends Activity implements SensorEventListener{
                     //Win
                     Log.d("WIN", "You Win");
                     //Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_LONG).show();
-                    mRectF = null;
+                    //mRectF = null;
+                    mXCenter = 10000;
+                    mYCenter = 10000;
                     mThread.setRunning(false);
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
@@ -270,7 +272,9 @@ public class MainActivity extends Activity implements SensorEventListener{
                     //Win
                     Log.d("WIN", "You Win");
                     //Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_LONG).show();
-                    mRectF = null;
+                    //mRectF = null;
+                    mXCenter = 10000;
+                    mYCenter = 10000;
                     mThread.setRunning(false);
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
@@ -302,7 +306,9 @@ public class MainActivity extends Activity implements SensorEventListener{
                     //Win
                     Log.d("WIN", "You Win");
                     //Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_LONG).show();
-                    mRectF = null;
+                    //mRectF = null;
+                    mXCenter = 10000;
+                    mYCenter = 10000;
                     mThread.setRunning(false);
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
@@ -326,7 +332,9 @@ public class MainActivity extends Activity implements SensorEventListener{
                     //Win
                     Log.d("WIN", "You Win");
                     //Toast.makeText(getApplicationContext(), "You Win", Toast.LENGTH_LONG).show();
-                    mRectF = null;
+                    //mRectF = null;
+                    mXCenter = 10000;
+                    mYCenter = 10000;
                     mThread.setRunning(false);
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
