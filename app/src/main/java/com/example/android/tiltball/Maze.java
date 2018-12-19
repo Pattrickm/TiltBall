@@ -21,42 +21,36 @@ public class Maze {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
 
+        // Creates a rect by splitting the screen size by the numer of tiles in X and Y
         drawRect.set(0, 0, screenWidth / xCellCountOnScreen, screenHeight / yCellCountOnScreen);
     }
 
     public int getType(int x, int y){
         if(y < tileType.length && x < tileType[y].length){
-//            if(tileType[y][x] == 0){
-//                Log.d("square on ", "FLOOR");
-//            }else if (tileType[y][x] == 1){
-//                Log.d("square on ", "WALL");
-//            }else if (tileType[y][x] == 2){
-//                Log.d("square on ", "HOLE");
-//            }else{
-//                Log.d("square on ", "ERRRRROR");
-//            }
-
+            // Returns what kind of tile is at cords X,Y
             return tileType[y][x];
         }
         return -1;
     }
     //TODO: remove passing screen sizes for all four below, already have them in private variables
+    // Gets the top pixel cord of the tile
     public int getTop(int mHeightScreen, int y){
         return y * (mHeightScreen / 16);
     }
+    // Gets the bottom pixel cord of the tile
     public int getBottom(int mHeightScreen, int y){
         return y * (mHeightScreen / 16) + (mHeightScreen / 16);
     }
+    // Gets the right pixel cord of the tile
     public int getRight(int mWidthScreen, int x){
         return x * (mWidthScreen / 10) + (mWidthScreen / 10);
     }
+    // Gets the left pixel cord of the tile
     public int getLeft(int mWidthScreen, int x){
         return x * (mWidthScreen / 10);
     }
 
-    public float getCellWidth(){ return drawRect.width(); }
-    public float getCellHeight(){ return drawRect.height(); }
-    
+    // Draws the maze
     public void drawMaze(Canvas canvas, float viewX, float viewY){
         int tileX = 0;
         int tileY = 0;
@@ -73,37 +67,20 @@ public class Maze {
             while(tileX < tileType[tileY].length && xCoord <= screenWidth){
                 // Check if the tile is not null
                 if(bitmaps[tileType[tileY][tileX]] != null){
-                    //canvas.drawBitmap(bitmaps[tileType[tileY][tileX]], null, drawRect, null);
+
                     // This tile is not null, so check if it has to be drawn
                     if(xCoord + drawRect.width() >= 0 && yCoord + drawRect.height() >= 0){
 
-                        //Log.d("tileX_Y", Integer.toString(tileX) + " " + Integer.toString(tileX));
-                        //Log.d("coordsX_Y", Float.toString(xCoord) + " " + Float.toString(yCoord));
                         // The tile actually visible to the user, so draw it
                         drawRect.offsetTo(xCoord, yCoord); // Move the rectangle to the coordinates
 
-                        //canvas.drawBitmap(bitmaps[tileType[tileY][tileX]],new Rect(0,0,20,20), drawRect, null);
+                        // Draws the tile from the location X,Y in the space of drawRect
                         canvas.drawBitmap(bitmaps[tileType[tileY][tileX]], null, drawRect, null);
-                        //canvas.drawBitmap(bitmaps[tileType[tileY][tileX]], new Rect(0,0,20,20), drawRect, null);
-                        ///canvas.drawBitmap(bitmaps[tileType[tileY][tileX]],xCoord , yCoord, null);
-                        //canvas.drawBitmap(bitmaps[tileType[tileY][tileX]], 20+xCoord*20,20+yCoord*20, null);
                     }
                 }
 
                 // Move to the next tile on the X axis
                 tileX++;
-
-//               Log.d("XUp", Integer.toString(tileX));
-//                if(tileX < tileType[tileY].length)
-//                    Log.d("firstCheckT", "First check true");
-//                else
-//                    Log.d("firstCheckF", "First check FALSE");
-//
-//                if(xCoord <= screenWidth)
-//                    Log.d("secondCheckT", "Second check true");
-//                else
-//                    Log.d("secondCheckF", "Second check FALSE");
-
                 xCoord += drawRect.width();
             }
 
@@ -111,9 +88,6 @@ public class Maze {
             tileY++;
 
             yCoord += drawRect.height();
-
-//            Log.d("screenWidth",Float.toString(screenWidth));
-//            Log.d("coordsX_Y", Float.toString(xCoord) + " " + Float.toString(yCoord));
         }
     }
 }
